@@ -16,3 +16,9 @@ def index(request):
 def about(request):
     return HttpResponse("<a href='/rango/'>Index</a>")
 
+def sammita(request):
+    context = {'name': "Sammita"}
+
+    return render(request, 'rango/name.html', context)
+
+
