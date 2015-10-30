@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from rango.models import Category
 from rango.models import Page
 from rango.forms import CategoryForm
+
 from rango.forms import PageForm
 #def index(request):
 
@@ -40,7 +41,8 @@ def add_page(request, category_name_slug):
     try:
         cat = Category.objects.get(slug=category_name_slug)
     except Category.DoesNotExist:
-                cat = None
+        cat = None
+
 
     if request.method == 'POST':
         form = PageForm(request.POST)
@@ -72,6 +74,7 @@ def category(request, category_name_slug):
         # So the .get() method returns one model instance or raises an exception.
         category = Category.objects.get(slug=category_name_slug)
         context_dict['category_name'] = category.name
+	context_dict['category_name_slug']=category.slug
 
         # Retrieve all of the associated pages.
         # Note that filter returns >= 1 model instance.
@@ -113,3 +116,4 @@ def add_category(request):
     # Bad form (or form details), no form supplied...
     # Render the form with error messages (if any).
     return render(request, 'rango/add_category.html', {'form': form})
+
