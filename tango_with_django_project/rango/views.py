@@ -9,6 +9,9 @@ from rango.forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 
+from django.shortcuts import render_to_response, redirect, render
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.decorators import login_required
 #def index(request):
 
     # Construct a dictionary to pass to the template engine as its context.
@@ -220,3 +223,20 @@ def user_login(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render(request, 'rango/login.html', {})
+
+
+def login(request):
+    # context = RequestContext(request, {
+    #     'request': request, 'user': request.user})
+    # return render_to_response('login.html', context_instance=context)
+    return render(request, 'loginsoc.html')
+
+
+@login_required(login_url='/')
+def home(request):
+    return render_to_response('home.html')
+
+
+def logout(request):
+    auth_logout(request)
+    return redirect('/')
