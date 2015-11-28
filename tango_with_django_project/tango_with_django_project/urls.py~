@@ -21,6 +21,10 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^rango/', include('rango.urls')),
     url('', include('social.apps.django_app.urls', namespace='social')),
+    url('', include('django.contrib.auth.urls', namespace='auth')),
+    url(r'^$', 'rango.views.login'),
+    url(r'^home/$', 'rango.views.home'),
+    url(r'^logout/$', 'rango.views.logout'),
     
 ]
 

@@ -6,12 +6,14 @@ from rango.forms import CategoryForm
 
 from rango.forms import PageForm
 from rango.forms import UserForm, UserProfileForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login 
 from django.http import HttpResponseRedirect, HttpResponse
-
-from django.shortcuts import render_to_response, redirect, render
 from django.contrib.auth import logout as auth_logout
-from django.contrib.auth.decorators import login_required
+
+from django.contrib import messages
+from django.contrib.auth import models
+
+
 #def index(request):
 
     # Construct a dictionary to pass to the template engine as its context.
@@ -125,7 +127,7 @@ def add_category(request):
     return render(request, 'rango/add_category.html', {'form': form})
 
 
-def register(request):
+"""def register(request):
 
     # A boolean value for telling the template whether the registration was successful.
     # Set to False initially. Code changes value to True when registration succeeds.
@@ -239,4 +241,23 @@ def home(request):
 
 def logout(request):
     auth_logout(request)
+    return redirect('/')"""
+
+def login(request):
+    """global updateTime
+    if updateTime == None:
+        updateTime = datetime.datetime.now()"""
+    user=request.user
+    if user.is_authenticated():
+	#print("88")
+        return HttpResponseRedirect('/rango/')
+    return render(request, 'loginsoc.html', {})
+
+
+def logout(request):
+    auth_logout(request)
     return redirect('/')
+
+def save_profile(backend, user, response, *args, **kwargs):
+    if backend.name == 'facebook':
+        profile = user
